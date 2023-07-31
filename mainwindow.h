@@ -20,7 +20,7 @@ private:
     Ui::MainWindow *ui;
     void Add_buttons(QGridLayout*);
 
-    QLCDNumber* lcd_label;
+    QLabel* lcd_label;
     QLineEdit* his_label;
 private slots:
     void add_sym();

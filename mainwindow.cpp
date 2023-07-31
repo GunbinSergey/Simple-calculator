@@ -16,9 +16,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     resize(300, 400);
 
-    lcd_label = new QLCDNumber;
+    lcd_label = new QLabel;
     lcd_label->setMaximumSize(800, 200);
-    lcd_label->setDigitCount(20);
+    lcd_label->setAlignment(Qt::AlignRight);
+
     his_label = new QLineEdit;
     his_label->setReadOnly(true);
 
@@ -46,7 +47,7 @@ void MainWindow::Add_buttons(QGridLayout *lay)
                        "789+"
                        "456-"
                        "123*"
-                       " 0,/";
+                       " 0./";
     int rows = symbs.length() / 4;
     int cols = symbs.length() / 5;
 
@@ -65,13 +66,15 @@ void MainWindow::add_sym()
 {
     QPushButton *sender = static_cast<QPushButton*>(QObject::sender());
 
-
-    QString at_is = QString::number(lcd_label->value());
+    QString at_is =  lcd_label->text();
     if (at_is == "0")
         at_is = "";
 
-    QString to_be = at_is+sender->text();
-    lcd_label->display(to_be);
+    QString n_sym = sender->text();
+
+
+    QString to_be = at_is+ n_sym;
+    lcd_label->setText(to_be);
 
 }
 

@@ -39,11 +39,14 @@
     <property name="digitCount">
      <number>20</number>
     </property>
+    <property name="mode">
+     <enum>QLCDNumber::Dec</enum>
+    </property>
     <property name="segmentStyle">
      <enum>QLCDNumber::Flat</enum>
     </property>
     <property name="value" stdset="0">
-     <double>5.430000000000000</double>
+     <double>5.000000000000000</double>
     </property>
    </widget>
   </widget>
