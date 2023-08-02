@@ -5,6 +5,8 @@
 #include <QtWidgets>
 #include <QQueue>
 
+#include "screen.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -20,22 +22,7 @@ public:
 private:
     Ui::MainWindow *ui;
     void add_buttons(QGridLayout*);
-    void add_sym(QString);
-    void clear_label();
-    void deep_clear_label();
-    void add_oper(QString);
-    QString Is_number(QString was, QString sym);
-    double get_value();
-    void calculate();
-
-
-    QLabel* lcd_label;
-    QLineEdit* his_label;
-
-    QQueue<QString>* oper;
-    QQueue<double>* values;
-    int que_len;
-    const QString label_base = "<font size = 12>";
+    Screen* scr;
 
 private slots:
     void cal_but_click();
