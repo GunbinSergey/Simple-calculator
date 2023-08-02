@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     lcd_label = new QLabel;
     lcd_label->setMaximumSize(800, 200);
     lcd_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    lcd_label->setText("<font size = 12>0");
+    lcd_label->setText(label_base + "0");
 
     his_label = new QLineEdit;
     his_label->setReadOnly(true);
@@ -70,10 +70,11 @@ void MainWindow::add_buttons(QGridLayout *lay)
 void MainWindow::add_sym(QString sym)
 {
     QString at_is =  lcd_label->text();
-    if (at_is == "<font size = 12>0")
-        at_is = "<font size = 12>";
 
-    QString to_be = at_is+ sym;
+
+
+    //QString to_be = at_is+ sym;
+    QString to_be = Is_number(at_is, sym);
     lcd_label->setText(to_be);
 }
 
@@ -104,7 +105,7 @@ void MainWindow::cal_but_click()
 
 void MainWindow::clear_label()
 {
-    lcd_label->setText("<font size = 12>0");
+    lcd_label->setText(label_base + "0");
 
 }
 
@@ -127,10 +128,31 @@ void MainWindow::add_oper(QString op)
 
 }
 
+QString MainWindow::Is_number(QString was, QString sym)
+{
+    QString s_val = was.replace(label_base, "");
+
+    if (s_val == "0" && sym != ".")
+    {
+        s_val = "";
+    }
+
+    QString ns_val = s_val + sym;
+    bool be_new;
+    double val = ns_val.toDouble(&be_new);
+    if (be_new)
+    {
+        return label_base + ns_val;
+    }
+    else
+        return was;
+
+}
+
 double MainWindow::get_value()
 {
     QString value_str = lcd_label->text();
-    value_str = value_str.replace("<font size = 12>", "");
+    value_str = value_str.replace(label_base, "");
     double val = value_str.toDouble();
     return val;
 }
@@ -140,14 +162,16 @@ void MainWindow::calculate()
     values->enqueue(get_value());
     que_len++;
 
+    qDebug() << QString::number(que_len);
+
     double result = 0;
 
     if (que_len < 2)
     {
         deep_clear_label();
         return;
-
     }
+
     double first = values->dequeue();
     que_len--;
     double second = values->dequeue();
@@ -173,12 +197,10 @@ void MainWindow::calculate()
     }
 
 
-
-
-
-
     //values->enqueue(result);
-    lcd_label->setText("<font size = 12>" + QString::number(result));
-
+    lcd_label->setText(label_base + QString::number(result));
+    //values->enqueue(get_value());
+    //que_len++;
+    qDebug() << QString::number(que_len);
 }
 

@@ -24,6 +24,7 @@ private:
     void clear_label();
     void deep_clear_label();
     void add_oper(QString);
+    QString Is_number(QString was, QString sym);
     double get_value();
     void calculate();
 
@@ -34,6 +35,7 @@ private:
     QQueue<QString>* oper;
     QQueue<double>* values;
     int que_len;
+    const QString label_base = "<font size = 12>";
 
 private slots:
     void cal_but_click();
