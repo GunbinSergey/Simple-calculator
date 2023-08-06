@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QtWidgets>
 
+#include "logger.h"
+
 class Screen: public QWidget
 {
     //Q_OBJECT
@@ -25,7 +27,9 @@ public:
 
 
     QLabel* lcd_label;
-    QLineEdit* his_label;
+
+    Logger* his_label;
+    //QLineEdit* his_label;
 
     QQueue<QString>* oper;
     QQueue<double>* values;

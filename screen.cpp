@@ -10,8 +10,10 @@ Screen::Screen()
     lcd_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     lcd_label->setText(label_base + "0");
 
-    his_label = new QLineEdit;
-    his_label->setReadOnly(true);
+
+    his_label = new Logger();
+    //his_label = new QLineEdit;
+    //his_label->setReadOnly(true);
 
     oper = new QQueue<QString>;
     values = new QQueue<double>;
@@ -48,7 +50,9 @@ void Screen::add_oper(QString op)
 {
     //Занесение в очередь оператора и первого операнда
     oper->enqueue(op);
-    values->enqueue(get_value());
+    double val = get_value();
+    values->enqueue(val);
+    his_label->log_sym(QString::number(val) + op);
     que_len++;
     clear_label();
 
@@ -70,7 +74,7 @@ QString Screen::Is_number(QString was, QString sym)
     double val = ns_val.toDouble(&be_new);
     if (be_new)
     {
-        return label_base + ns_val;
+        return label_base + ns_val;        
     }
     else
         return was;
@@ -88,6 +92,7 @@ double Screen::get_value()
 
 double Screen::val_calc(double fir, double second, QString op)
 {
+    //Непосредственно вычисление
     double result = 0;
     if (op == "+")
     {
@@ -114,7 +119,7 @@ void Screen::calculate()
     values->enqueue(get_value());
     que_len++;
 
-    qDebug() << QString::number(que_len);
+    //qDebug() << QString::number(que_len);
 
     double result = 0;
 
@@ -132,6 +137,7 @@ void Screen::calculate()
 
     result = val_calc(first, second, operat);
 
+    his_label->log_sym(QString::number(second) + "=" + QString::number(result));
     lcd_label->setText(label_base + QString::number(result));
-    qDebug() << QString::number(que_len);
+    //qDebug() << QString::number(que_len);
 }

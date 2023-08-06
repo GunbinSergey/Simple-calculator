@@ -60,6 +60,7 @@ void MainWindow::cal_but_click()
     if (sym == "C")
     {
         scr->deep_clear_label();
+        scr->his_label->clear_log();
     }
     else if (sym == "+" || sym == "-" || sym == "*" || sym == "/")
     {
