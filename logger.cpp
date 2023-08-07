@@ -1,6 +1,6 @@
 #include "logger.h"
 
-void Logger::()
+void Logger::clear_log()
 {
     line->setText("");
 }

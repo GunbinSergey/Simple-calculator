@@ -121,7 +121,7 @@ void Screen::calculate()
 
     //qDebug() << QString::number(que_len);
 
-    double result = 0;
+
 
     if (que_len < 2)
     {
@@ -131,12 +131,18 @@ void Screen::calculate()
 
     double first = values->dequeue();
     que_len--;
-    double second = values->dequeue();
-    que_len--;
-    QString operat = oper->dequeue();
+    double second = 0;
+    double result = 0;
+    int qlen = que_len;
+    for (int i = 0; i < qlen; ++i)
+    {
+        second = values->dequeue();
+        que_len--;
+        QString operat = oper->dequeue();
+        first = val_calc(first, second, operat);
+    }
 
-    result = val_calc(first, second, operat);
-
+    result = first;
     his_label->log_sym(QString::number(second) + "=" + QString::number(result));
     lcd_label->setText(label_base + QString::number(result));
     //qDebug() << QString::number(que_len);
